@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: VanillaPlus_Macro
+## Notes: Bringing retail macro commands to classic WoW.
+## Dependencies: VanillaPlus_Common
+
+ClassicMacros.lua
+CleverMacro.lua
+Compat.lua
