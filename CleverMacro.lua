@@ -893,6 +893,8 @@ local function OnUpdate(self)
     if (time - lastUpdate) < 0.1 then return end
     lastUpdate = time
 
+    print("start OnUpdate" .. tostring(lastUpdate) .. " " .. tostring(time));
+
     if currentSequence and currentSequence.status >= 2 and 
             (time - currentSequence.lastUpdate) >= 0.2 then
         if currentSequence.status == 2 then
@@ -927,8 +929,6 @@ local function OnUpdate(self)
             end
         end
     end
-    
-    print("start RefreshAction");
 
     for slot, action in pairs(actions) do
         if RefreshAction(action) then
