@@ -159,16 +159,8 @@ local function GetSpellInfo(spellSlot)
 
     local textLeft2 = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:IsShown() and VanillaPlusTooltipTextLeft2:GetText() or nil;
 
-    if(spellSlot == 113) then
-        print(textLeft2);
-    end
-
     if(textLeft2 ~= nil) then
         local _, _, cost, powerTypeString = string.find(textLeft2, "(%d+)%s*(%S+)");
-
-        if(spellSlot == 113) then
-            print(cost);
-        end
 
         return tonumber(cost);
     else
