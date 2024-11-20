@@ -76,29 +76,12 @@ end
 
 --获取技能CD
 local function GetSpellCooldownByName(spellName)
-    local checkFor = function(bookType)
-        local i = 1
-        while true do
-            local name, spellRank = GetSpellName(i, bookType)
-            
-            if not name then
-                break
-            end
-            
-            if name == spellName then
-                local _, duration = GetSpellCooldown(i, bookType)
-                return duration
-            end
-            
-            i = i + 1
-        end
-        return nil
-    end
+    local spell = VanillaPlus.GetSpell(spellName);
 
-    local cd = checkFor(BOOKTYPE_PET)
-    if not cd then cd = checkFor(BOOKTYPE_SPELL) end
-    
-    return cd
+    if(spell ~= nil) then
+        local _, duration = spell:GetCooldown()
+        return duration
+    end
 end
 
 --获取装备栏物品CD
