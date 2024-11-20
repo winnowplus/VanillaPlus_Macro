@@ -886,9 +886,7 @@ end
 -- UI                                                                          -
 --------------------------------------------------------------------------------
 
-local function OnUpdate(self)
-    local time = GetTime()
-
+local function OnUpdate(time)
     -- Slow down a bit.
     if (time - lastUpdate) < 0.1 then return end
     lastUpdate = time
@@ -935,6 +933,8 @@ local function OnUpdate(self)
     end
 end
 
+VanillaPlus.EventRegistry:RegisterCallback("UPDATE", OnUpdate);
+
 local function OnEvent()
     if event == "UPDATE_MACROS" or event == "SPELLS_CHANGED" then
         currentSequence = nil
@@ -975,7 +975,6 @@ local function OnEvent()
 end
 
 CM_ScanTip = CreateFrame("GameTooltip", "CM_ScanTip", nil, "GameTooltipTemplate")
-CM_ScanTip:SetScript("OnUpdate", OnUpdate)
 CM_ScanTip:SetScript("OnEvent", OnEvent)
 
 CM_ScanTip:RegisterEvent("UPDATE_MACROS")
