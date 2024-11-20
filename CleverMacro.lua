@@ -889,11 +889,11 @@ end
 local function OnUpdate(self)
     local time = GetTime()
 
+    print("start OnUpdate" .. tostring(lastUpdate) .. " " .. tostring(time));
+
     -- Slow down a bit.
     if (time - lastUpdate) < 0.1 then return end
     lastUpdate = time
-
-    print("start OnUpdate" .. tostring(lastUpdate) .. " " .. tostring(time));
 
     if currentSequence and currentSequence.status >= 2 and 
             (time - currentSequence.lastUpdate) >= 0.2 then
