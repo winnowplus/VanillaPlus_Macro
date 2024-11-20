@@ -889,8 +889,6 @@ end
 local function OnUpdate(self)
     local time = GetTime()
 
-    print("start OnUpdate" .. tostring(lastUpdate) .. " " .. tostring(time));
-
     -- Slow down a bit.
     if (time - lastUpdate) < 0.1 then return end
     lastUpdate = time
