@@ -54,10 +54,10 @@ local function Compare_UnitHp(v, unit)
 		local HPPercent = 100 / UnitHealthMax(unit) * UnitHealth(unit)
 		if string.find(hp, ">") then
 			local biggerhp = Split(hp, ">")
-			return HPPercent > tonumber(biggerhp[2])
+			return HPPercent > tonumber(biggerhp[1])
 		elseif string.find(hp, "<") then
 			local lesshp = Split(hp, "<")
-			return HPPercent < tonumber(lesshp[2])
+			return HPPercent < tonumber(lesshp[1])
 		end
 	end
 end
@@ -68,10 +68,10 @@ local function Compare_UnitMp(v, unit)
 		local MPPercent = 100 / UnitManaMax(unit) * UnitMana(unit)
 		if string.find(mp, ">") then
 			local biggermp = Split(mp, ">")
-			return MPPercent > tonumber(biggermp[2])
+			return MPPercent > tonumber(biggermp[1])
 		elseif string.find(mp, "<") then
 			local lessmp = Split(mp, "<")
-			return MPPercent < tonumber(lessmp[2])
+			return MPPercent < tonumber(lessmp[1])
 		end
 	end
 end
