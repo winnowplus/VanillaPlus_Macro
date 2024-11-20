@@ -928,6 +928,8 @@ local function OnUpdate(self)
         end
     end
     
+    print("start RefreshAction");
+
     for slot, action in pairs(actions) do
         if RefreshAction(action) then
             SendEventForAction(slot, "ACTIONBAR_SLOT_CHANGED", slot)
