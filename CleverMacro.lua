@@ -6,9 +6,7 @@ if(_G == nil) then
     _G = getfenv()
 end
 
-local lastUpdate = 0    
-local currentAction
-local mouseOverUnit
+local lastUpdate = 0
 
 local actions = {}    
 local macros = {}    
