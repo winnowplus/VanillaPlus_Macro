@@ -276,6 +276,12 @@ local function TestConditions(conditions, target)
 					result = Get_CD(cd)
 				end
             end
+        elseif mod == "cooldown" then
+            if v then
+				for cd in v do
+					result = Get_CD(cd)
+				end
+            end
         elseif mod == "mybuff" then
             if v then
 				for s in v do
@@ -294,7 +300,19 @@ local function TestConditions(conditions, target)
 					result = TarBuff(s)
 				end
             end
+        elseif mod == "buff" then
+            if v then
+				for s in v do
+					result = TarBuff(s)
+				end
+            end
         elseif mod == "tardebuff" then
+            if v then
+				for s in v do
+					result = TarDebuff(s)
+				end
+            end
+        elseif mod == "debuff" then
             if v then
 				for s in v do
 					result = TarDebuff(s)
@@ -305,6 +323,10 @@ local function TestConditions(conditions, target)
 				result = Compare_UnitHp(v, "player")
 			end
         elseif mod == "mymp" then		
+			if v then
+				result = Compare_UnitMp(v, "player")
+			end
+        elseif mod == "mypower" then		
 			if v then
 				result = Compare_UnitMp(v, "player")
 			end
