@@ -43,9 +43,137 @@ local function Seq(_, i)
     return (i or 0) + 1
 end
 
-local Trim = VanillaPlus.Strings.Trim;
-local Split = VanillaPlus.Strings.Split;
+----------------------------------------------------------
 
+local function Trim(str)
+    return string.gsub(str, "^%s*(.-)%s*$", "%1");
+end
+
+local function Split(str, seperatorPattern)
+    local tbl = {};
+    local pattern = "(.-)" .. seperatorPattern;
+    local lastEnd = 1;
+    local startIndex, endIndex, capture = string.find(str, pattern, lastEnd);
+    
+    while(startIndex ~= nil) do
+        if(startIndex ~= 1 or capture ~= "") then
+            table.insert(tbl, capture);
+        end
+
+        lastEnd = endIndex + 1;
+        startIndex, endIndex, capture = string.find(str, pattern, lastEnd);
+    end
+    
+    if(lastEnd <= string.len(str)) then
+        capture = string.sub(str, lastEnd);
+        table.insert(tbl, capture);
+    end
+    
+    return tbl;
+end
+
+local function AURA_NAME_CONTAINS(aura, expect)
+    return string.find(aura.name, expect) ~= nil;
+end
+
+local function PrivateGetPlayerAura(slot, filter)
+    local auraIndex, untilCancelled = GetPlayerBuff(PLAYER_AURA_SLOT_OFFSET + slot, filter);
+    if(auraIndex < 0) then
+        return;
+    end
+
+    VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    VanillaPlusTooltip:ClearLines();
+    VanillaPlusTooltip:SetPlayerBuff(auraIndex);
+
+    return {
+        name            = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil,
+        texture         = GetPlayerBuffTexture(auraIndex),
+        count           = GetPlayerBuffApplications(auraIndex),
+        dispelType      = GetPlayerBuffDispelType(auraIndex),
+        untilCancelled  = untilCancelled == 1,
+        timeLeft        = GetPlayerBuffTimeLeft(auraIndex),
+        index           = auraIndex
+    };
+end
+
+local function PrivateGetUnitBuff(unit, slot)
+    local texture, count = UnitBuff(unit, slot);
+    if(texture == nil) then
+        return;
+    end
+
+    VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    VanillaPlusTooltip:ClearLines();
+    VanillaPlusTooltip:SetUnitBuff(unit, slot);
+
+    return {
+        name    = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil,
+        texture = texture,
+        count   = count,
+        slot    = slot
+    };
+end
+
+local function PrivateGetUnitDebuff(unit, slot)
+    local texture, count, dispelType = UnitDebuff(unit, slot);
+    if(texture == nil) then
+        return;
+    end
+
+    VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    VanillaPlusTooltip:ClearLines();
+    VanillaPlusTooltip:SetUnitDebuff(unit, slot);
+
+    return {
+        name        = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil,
+        texture     = texture,
+        count       = count,
+        dispelType  = dispelType,
+        slot        = slot
+    };
+end
+
+local function FindPlayerAura(filter, predicate, ...)
+    local slot, aura = 0, nil;
+
+    repeat
+        slot = slot + 1;
+        aura = PrivateGetPlayerAura(slot, filter);
+
+        if(aura ~= nil and predicate(aura, unpack(arg))) then
+            return aura;
+        end
+    until(aura == nil)
+end
+
+local function FindUnitBuff(unit, predicate, ...)
+    local slot, aura = 0, nil;
+
+    repeat
+        slot = slot + 1;
+        aura = PrivateGetUnitBuff(unit, slot);
+
+        if(aura ~= nil and predicate(aura, unpack(arg))) then
+            return aura;
+        end
+    until(aura == nil)
+end
+
+local function FindUnitDebuff(unit, predicate, ...)
+    local slot, aura = 0, nil;
+
+    repeat
+        slot = slot + 1;
+        aura = PrivateGetUnitDebuff(unit, slot);
+
+        if(aura ~= nil and predicate(aura, unpack(arg))) then
+            return aura;
+        end
+    until(aura == nil)
+end
+
+---------------------------------------------------------
 --比较HP
 local function Compare_UnitHp(v, unit)
 	for hp in v do
@@ -133,22 +261,22 @@ function Get_CD(name)
 end
 
 function MyBuff(auraName)
-    local aura = VanillaPlus.FindPlayerAura("HELPFUL", VanillaPlus.Predicates.AURA_NAME_CONTAINS, auraName);
+    local aura = FindPlayerAura("HELPFUL", AURA_NAME_CONTAINS, auraName);
     return aura ~= nil;
 end
 
 function MyDebuff(auraName)
-    local aura = VanillaPlus.FindPlayerAura("HARMFUL", VanillaPlus.Predicates.AURA_NAME_CONTAINS, auraName);
+    local aura = FindPlayerAura("HARMFUL", AURA_NAME_CONTAINS, auraName);
     return aura ~= nil;
 end
 
 function TarBuff(auraName)
-    local aura = VanillaPlus.FindUnitBuff("target", VanillaPlus.Predicates.AURA_NAME_CONTAINS, auraName);
+    local aura = FindUnitBuff("target", AURA_NAME_CONTAINS, auraName);
     return aura ~= nil;
 end
 
 function TarDebuff(auraName)
-    local aura = VanillaPlus.FindUnitDebuff("target", VanillaPlus.Predicates.AURA_NAME_CONTAINS, auraName);
+    local aura = FindUnitDebuff("target", AURA_NAME_CONTAINS, auraName);
     return aura ~= nil;
 end
 
