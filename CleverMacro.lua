@@ -77,7 +77,7 @@ local function AURA_NAME_CONTAINS(aura, expect)
 end
 
 local function PrivateGetPlayerAura(slot, filter)
-    local auraIndex, untilCancelled = GetPlayerBuff(PLAYER_AURA_SLOT_OFFSET + slot, filter);
+    local auraIndex, untilCancelled = GetPlayerBuff(-1 + slot, filter);
     if(auraIndex < 0) then
         return;
     end
