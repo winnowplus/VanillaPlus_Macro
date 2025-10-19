@@ -36,7 +36,7 @@ local function Check24SoltSpell(SoltId)
 end
 
 local function GetSpellIndex(spellName)
-	local spell = GetSpell111((spellName, BOOKTYPE_SPELL);
+	local spell = GetSpell111(spellName, BOOKTYPE_SPELL);
 
 	return spell and spell.slot or 0;
 end
