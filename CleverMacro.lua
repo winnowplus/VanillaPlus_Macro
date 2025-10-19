@@ -43,7 +43,7 @@ local function GetPlayerSpellCahce()
             local _, _, offset, numSpells = GetSpellTabInfo(tabIndex);
 
             for slot = offset + 1, offset + numSpells do
-                local spell = CreateAndInitFromMixin(SpellMixin, slot, bookType);
+                local spell = CreateAndInitFromMixin1(SpellMixin, slot, bookType);
 
                 if(spell.name ~= nil) then
                     SPELL_CACHE[bookType][spell.name] = spell;
@@ -66,7 +66,7 @@ local function GetPetSpellCahce()
 
         repeat
             slot = slot + 1;
-            spell = CreateAndInitFromMixin(SpellMixin, slot, bookType);
+            spell = CreateAndInitFromMixin1(SpellMixin, slot, bookType);
 
             if(spell.name ~= nil) then
                 SPELL_CACHE[bookType][spell.name] = spell;

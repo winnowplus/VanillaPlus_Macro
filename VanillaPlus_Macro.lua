@@ -1,4 +1,4 @@
-local function PrivateMixin(object, ...)
+local function Mixin(object, ...)
     for index, mixin in ipairs(arg) do
 		for key, value in pairs(mixin) do
 			object[key] = value;
@@ -8,12 +8,12 @@ local function PrivateMixin(object, ...)
 	return object;
 end
 
-local function PrivateCreateFromMixins(...)
-	return PrivateMixin({}, unpack(arg))
+local function CreateFromMixins(...)
+	return Mixin({}, unpack(arg))
 end
 
-local function PrivateCreateAndInitFromMixin(mixin, ...)
-	local object = PrivateCreateFromMixins(mixin);
+function CreateAndInitFromMixin1(mixin, ...)
+	local object = CreateFromMixins(mixin);
 	object:Init(unpack(arg));
 	
 	return object;
@@ -136,5 +136,5 @@ end
 
 -------
 
-MacroEventRegistry = CreateAndInitFromMixin(EventRegistryMixin, MacroEventFrame);
+MacroEventRegistry = CreateAndInitFromMixin1(EventRegistryMixin, MacroEventFrame);
 
