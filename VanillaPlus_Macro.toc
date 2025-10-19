@@ -1,7 +1,6 @@
 ## Interface: 11200
 ## Title: VanillaPlus_Macro
 ## Notes: Bringing retail macro commands to classic WoW.
-## Dependencies: VanillaPlus_Common
 
 VanillaPlus_Macro.xml
 VanillaPlus_Macro.lua
