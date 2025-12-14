@@ -410,6 +410,13 @@ local function TestConditions(conditions, target)
 					result = Get_CD(cd)
 				end
             end
+        elseif mod == "known" then
+            if v then
+				for s in v do
+                    local spellobj = GetSpell111(v);
+					result = (spellobj ~= null)
+				end
+            end
         elseif mod == "mybuff" then
             if v then
 				for s in v do
