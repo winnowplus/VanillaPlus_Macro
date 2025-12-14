@@ -413,7 +413,7 @@ local function TestConditions(conditions, target)
         elseif mod == "known" then
             if v then
 				for s in v do
-                    local spellobj = GetSpell111(v);
+                    local spellobj = GetSpell111(s);
 					result = (spellobj ~= nil)
 				end
             end
