@@ -414,7 +414,7 @@ local function TestConditions(conditions, target)
             if v then
 				for s in v do
                     local spellobj = GetSpell111(v);
-					result = (spellobj ~= null)
+					result = (spellobj ~= nil)
 				end
             end
         elseif mod == "mybuff" then
